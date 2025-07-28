@@ -3,9 +3,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include_once("./common/header.php");
+include_once "./common/header.php";
 include_once "Functions.php";
 include_once "EntityClassLib.php";
+require_once "SecurityMode.php";
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start(); // Start session only if not already started
@@ -59,8 +60,14 @@ if (isset($regSubmit)) {
     // If no errors, proceed with registration
     if (empty($errors)) {
         try {
+            global $SECURITY_MODE;
             // Hash the password before storing
-            $hashedPassword = password_hash($txtPassword, PASSWORD_DEFAULT);
+            if ($SECURITY_MODE === "vulnerable") {
+                $hashedPassword = $txtPassword; // Plaintext storage (insecure)
+            } else {
+                $hashedPassword = password_hash($txtPassword, PASSWORD_DEFAULT); // Secure hash
+            }
+
             addNewUser($txtId, $txtName, $txtPhoneNumber, $hashedPassword);
             $_SESSION['user'] = getUserByIdAndPassword($txtId, $txtPassword);
             header("Location: index.php");
@@ -84,7 +91,8 @@ if (isset($regSubmit)) {
                 <div class="row mb-3">
                     <label for="studentId" class="col-sm-4 col-form-label">User ID:</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="studentId" name="txtId" value="<?php echo htmlspecialchars($txtId); ?>">
+                        <input type="text" class="form-control" id="studentId" name="txtId"
+                            value="<?php echo htmlspecialchars($txtId); ?>">
                         <div class="text-danger"><?php echo isset($errors['txtId']) ? $errors['txtId'] : ''; ?></div>
                     </div>
                 </div>
@@ -92,16 +100,21 @@ if (isset($regSubmit)) {
                 <div class="row mb-3">
                     <label for="studentName" class="col-sm-4 col-form-label">Name:</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="studentName" name="txtName" value="<?php echo htmlspecialchars($txtName); ?>">
-                        <div class="text-danger"><?php echo isset($errors['txtName']) ? $errors['txtName'] : ''; ?></div>
+                        <input type="text" class="form-control" id="studentName" name="txtName"
+                            value="<?php echo htmlspecialchars($txtName); ?>">
+                        <div class="text-danger"><?php echo isset($errors['txtName']) ? $errors['txtName'] : ''; ?>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label for="phoneNumber" class="col-sm-4 col-form-label">Phone Number:</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="phoneNumber" name="txtPhoneNumber" value="<?php echo htmlspecialchars($txtPhoneNumber); ?>">
-                        <div class="text-danger"><?php echo isset($errors['txtPhoneNumber']) ? $errors['txtPhoneNumber'] : ''; ?></div>
+                        <input type="text" class="form-control" id="phoneNumber" name="txtPhoneNumber"
+                            value="<?php echo htmlspecialchars($txtPhoneNumber); ?>">
+                        <div class="text-danger">
+                            <?php echo isset($errors['txtPhoneNumber']) ? $errors['txtPhoneNumber'] : ''; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -109,7 +122,9 @@ if (isset($regSubmit)) {
                     <label for="createPassword" class="col-sm-4 col-form-label">Password:</label>
                     <div class="col-sm-8">
                         <input type="password" class="form-control" id="createPassword" name="txtPassword">
-                        <div class="text-danger"><?php echo isset($errors['txtPassword']) ? $errors['txtPassword'] : ''; ?></div>
+                        <div class="text-danger">
+                            <?php echo isset($errors['txtPassword']) ? $errors['txtPassword'] : ''; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -117,7 +132,9 @@ if (isset($regSubmit)) {
                     <label for="confirmPassword" class="col-sm-4 col-form-label">Password Again:</label>
                     <div class="col-sm-8">
                         <input type="password" class="form-control" id="confirmPassword" name="txtPasswordConfirm">
-                        <div class="text-danger"><?php echo isset($errors['txtPasswordConfirm']) ? $errors['txtPasswordConfirm'] : ''; ?></div>
+                        <div class="text-danger">
+                            <?php echo isset($errors['txtPasswordConfirm']) ? $errors['txtPasswordConfirm'] : ''; ?>
+                        </div>
                     </div>
                 </div>
 

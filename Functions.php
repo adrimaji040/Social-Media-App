@@ -1,34 +1,51 @@
 <?php
 include_once 'EntityClassLib.php';
+require_once 'SecurityMode.php';
 
 // Get PDO connection using Lab5.ini configuration
-function getPDO() {
+function getPDO()
+{
     $dbConnection = parse_ini_file("cst8257project.ini");
     extract($dbConnection);
 
     $pdo = new PDO($dsn, $scriptUser, $scriptPassword);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+
     return $pdo;
 }
 
-function getUserByIdAndPassword($userId, $password) {
+function getUserByIdAndPassword($userId, $password)
+{
     $pdo = getPDO();
-    $sql = "SELECT UserId, Name, Phone, Password FROM User WHERE UserId = :userId";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':userId', $userId);
-    $stmt->execute();
+    global $SECURITY_MODE;
 
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($row && password_verify($password, $row['Password'])) {
-        return new User($row['UserId'], $row['Name'], $row['Phone']);
+    if ($SECURITY_MODE === "vulnerable") {
+        // Vulnerable to SQL Injection and plain-text comparison
+        $sql = "SELECT UserId, Name, Phone, Password FROM User WHERE UserId = '$userId' AND Password = '$password'";
+        $stmt = $pdo->query($sql);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            return new User($row['UserId'], $row['Name'], $row['Phone']);
+        }
+    } else {
+        // Secure with prepared statements and password_verify
+        $sql = "SELECT UserId, Name, Phone, Password FROM User WHERE UserId = :userId";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':userId', $userId);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row && password_verify($password, $row['Password'])) {
+            return new User($row['UserId'], $row['Name'], $row['Phone']);
+        }
     }
+
     return null;
 }
 
 
 
-function addNewUser($userId, $name, $phone, $password) {
+function addNewUser($userId, $name, $phone, $hashedPassword)
+{
     $pdo = getPDO();
     $sql = "INSERT INTO User (UserId, Name, Phone, Password) VALUES (:UserId, :name, :phone, :password)";
     $stmt = $pdo->prepare($sql);
@@ -36,11 +53,12 @@ function addNewUser($userId, $name, $phone, $password) {
         'UserId' => $userId,
         'name' => $name,
         'phone' => $phone,
-        'password' => $password
+        'password' => $hashedPassword
     ]);
 }
 
-function getUserById($userId) {
+function getUserById($userId)
+{
     $pdo = getPDO();
     $sql = "SELECT UserId FROM User WHERE UserId = :userId";
     $stmt = $pdo->prepare($sql);
@@ -49,7 +67,8 @@ function getUserById($userId) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function getUserAlbums($userId) {
+function getUserAlbums($userId)
+{
     $pdo = getPDO();
     $sql = "SELECT a.Album_Id, a.Title, 
                    a.Description, a.Accessibility_Code, 
@@ -64,14 +83,16 @@ function getUserAlbums($userId) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getAccessibilityOptions() {
+function getAccessibilityOptions()
+{
     $pdo = getPDO();
     $sql = "SELECT Accessibility_Code, Description FROM Accessibility";
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function updateAlbumAccessibility($albumId, $newAccessibility) {
+function updateAlbumAccessibility($albumId, $newAccessibility)
+{
     $pdo = getPDO();
     $sql = "UPDATE Album SET Accessibility_Code = :accessibility WHERE Album_Id = :album_id";
     $stmt = $pdo->prepare($sql);
@@ -81,11 +102,11 @@ function updateAlbumAccessibility($albumId, $newAccessibility) {
     ]);
 }
 
-function deleteAlbum($albumId) {
+function deleteAlbum($albumId)
+{
     $pdo = getPDO();
     $sql = "DELETE FROM Album WHERE Album_Id = :album_id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':album_id', $albumId);
     $stmt->execute();
 }
-?>
