@@ -80,6 +80,18 @@ class User
         }
         return $friends;
     }
+
+    // Setter for name
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    // Setter for password
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
 }
 
 class Album
