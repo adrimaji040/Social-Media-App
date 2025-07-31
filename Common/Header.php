@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" style="position: relative; min-height: 100%;">
+<html lang="en">
 
 <head>
     <title>Algonquin Social Media</title>
@@ -17,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="Common/css/styles.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
         <div class="container-fluid">
             <a class="navbar-brand" href="http://www.algonquincollege.com" style="padding: 10px">
@@ -61,4 +61,4 @@ if (session_status() == PHP_SESSION_NONE) {
         Mode: <?= strtoupper($SECURITY_MODE) ?>
     </div>
 
-    <div class="content px-4">
+    <div class="content px-4 flex-grow-1">

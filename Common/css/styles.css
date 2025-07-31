@@ -1,10 +1,32 @@
+/* Body and layout styles */
+body {
+    min-height: 100vh;
+}
+
+/* Navigation improvements */
+.navbar {
+    margin-bottom: 0;
+}
+
+.content {
+    padding-bottom: 2rem; /* Add some breathing space before footer */
+    flex: 1; /* Ensure content takes available space */
+    padding-top: 1rem; /* Add some space after navbar */
+}
+
+/* Ensure proper spacing for main containers */
+.container {
+    margin-bottom: 1rem;
+}
+
 footer {
     background-color: #004400;
     color: white;
     text-align: center;
     padding-top: 10px;
+    padding-bottom: 10px;
     font-size: 0.9em;
-    margin-top: 40px;
+    /* Removed margin-top as it's now handled by flexbox */
 }
 
 a {
@@ -78,7 +100,8 @@ a.btn:hover {
 }
 
 .card {
-    margin-top: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 30px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
