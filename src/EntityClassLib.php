@@ -1,6 +1,6 @@
 <?php
 
-include_once 'functions.php';
+include_once(__DIR__ . '/Functions.php');
 class User
 {
     private $userId;
@@ -68,7 +68,7 @@ class User
                  UNION
                 SELECT friendship.Friend_RequesterId FROM friendship
                     WHERE Friend_RequesteeId = :userId AND Status = 'accepted');");
-        $stmt->execute(['userId'=>$this->userId]);
+        $stmt->execute(['userId' => $this->userId]);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $friends = [];
@@ -225,8 +225,8 @@ class Album
             $errorInfo = $stmt->errorInfo();
             throw new Exception("Error deleting album: " . $errorInfo[2]);
         }
-        rmdir("uploads/album_$albumId/thumbnails");
-        rmdir("uploads/album_$albumId");
+        rmdir(__DIR__ . "/../uploads/album_$albumId/thumbnails");
+        rmdir(__DIR__ . "/../uploads/album_$albumId");
     }
 
 
@@ -291,12 +291,12 @@ class Picture
 
     public function getFilePath()
     {
-        return "uploads/album_{$this->albumId}/" . $this->fileName;
+        return "../uploads/album_{$this->albumId}/" . $this->fileName;
     }
 
     public function getThumbnailPath()
     {
-        return "uploads/album_{$this->albumId}/thumbnails/thumbnail_" . $this->fileName;
+        return "../uploads/album_{$this->albumId}/thumbnails/thumbnail_" . $this->fileName;
     }
 
     public function setPictureId($pictureId)
@@ -319,8 +319,8 @@ class Picture
 
     public function saveToUploadFolder($tmpFilePath, $albumId)
     {
-        $uploadDir = "./uploads/album_$albumId/";
-        $thumbnailDir = "./uploads/album_$albumId/thumbnails/";
+        $uploadDir = __DIR__ . "/../uploads/album_$albumId/";
+        $thumbnailDir = __DIR__ . "/../uploads/album_$albumId/thumbnails/";
 
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);

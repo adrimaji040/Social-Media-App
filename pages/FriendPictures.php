@@ -1,7 +1,7 @@
 <?php
 
-include_once 'EntityClassLib.php';
-include_once 'Functions.php';
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+include_once(__DIR__ . "/../src/Functions.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
     }
 }
 
-require_once("./common/header.php");
+require_once(__DIR__ . "/../Common/Header.php");
 ?>
 <h1 class="card-title text-center text-dark my-3 display-6 animated-border">
     Your friend <?= htmlspecialchars($friend->getName()) ?>'s Shared Pictures
@@ -193,4 +193,6 @@ require_once("./common/header.php");
         </div>
     <?php endif; ?>
 </div>
-<?php require_once("./common/footer.php"); ?>
+<?php require_once(__DIR__ . "/../Common/Footer.php"); ?>
+
+

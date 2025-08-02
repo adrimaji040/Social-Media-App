@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-include_once 'EntityClassLib.php';
-include_once 'Functions.php';
-include("./common/header.php");
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+include_once(__DIR__ . "/../src/Functions.php");
+include(__DIR__ . "/../Common/Header.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -87,13 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger text-center">
-                <?php foreach ($errors as $error) echo htmlspecialchars($error) . "<br>"; ?>
+                <?php foreach ($errors as $error)
+                    echo htmlspecialchars($error) . "<br>"; ?>
             </div>
         <?php endif; ?>
         <form method="post">
             <div class="mb-3">
                 <label for="name" class="form-label lead">Name:</label>
-                <input type="text" name="name" id="name" class="form-control" value="<?= htmlspecialchars($user->getName()) ?>">
+                <input type="text" name="name" id="name" class="form-control"
+                    value="<?= htmlspecialchars($user->getName()) ?>">
             </div>
             <hr>
             <h5>Change Password</h5>
@@ -111,10 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary me-2">Save Changes</button>
-                <a href="index.php" class="btn btn-outline-secondary">Cancel</a>
+                <a href="Index.php" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>
