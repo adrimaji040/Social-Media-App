@@ -41,7 +41,7 @@ try {
     $pdo = getPDO();
 
     // Ensure the FriendshipStatus table is initialized
-    initializeFriendshipStatus($pdo);
+    //initializeFriendshipStatus($pdo);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $friendId = trim($_POST['friendId']);

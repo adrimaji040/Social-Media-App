@@ -44,6 +44,8 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li class="nav-item">
                         <a class="nav-link" href="UploadPictures.php">Upload Pictures</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="EditProfile.php">Edit Profile</a>
                     <li class="nav-item ms-auto me-2">
                         <?php if (isset($_SESSION['user'])): ?>
                             <a class="nav-link" href="Logout.php">Log Out</a>

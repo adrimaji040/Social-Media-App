@@ -7,6 +7,9 @@ include("./common/header.php");
 include_once 'Functions.php';
 include_once 'EntityClassLib.php';
 
+
+testDBConnection();
+
 extract($_POST);
 $loginErrorMsg = '';
 
@@ -30,7 +33,7 @@ if (isset($btnLogin)) {
             $loginErrorMsg = 'Incorrect User ID and Password Combination!';
         }
     } catch (Exception $e) {
-        die("The system is currently not available, try again later.");
+         die("Error: " . $e->getMessage());
     }
 }
 ?>

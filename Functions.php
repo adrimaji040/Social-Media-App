@@ -110,3 +110,15 @@ function deleteAlbum($albumId)
     $stmt->bindValue(':album_id', $albumId);
     $stmt->execute();
 }
+
+function testDBConnection()
+{
+    try {
+        $pdo = getPDO();
+        echo "Database connection successful!";
+        $userInfo = $pdo->query("SELECT USER()")->fetchColumn();
+        echo "Connected to MySQL as: $userInfo";
+    } catch (Exception $e) {
+        echo "Database connection failed: " . $e->getMessage();
+    }
+}
