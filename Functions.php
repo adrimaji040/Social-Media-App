@@ -25,7 +25,7 @@ function getUserByIdAndPassword($userId, $password)
         $stmt = $pdo->query($sql);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row) {
-            return new User($row['UserId'], $row['Name'], $row['Phone']);
+            return new User($row['UserId'], $row['Name'], $row['Phone'], $row['Password']);
         }
     } else {
         // Secure with prepared statements and password_verify
@@ -35,7 +35,7 @@ function getUserByIdAndPassword($userId, $password)
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row && password_verify($password, $row['Password'])) {
-            return new User($row['UserId'], $row['Name'], $row['Phone']);
+            return new User($row['UserId'], $row['Name'], $row['Phone'], $row['Password']);
         }
     }
 

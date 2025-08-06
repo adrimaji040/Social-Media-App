@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 include_once 'EntityClassLib.php';
 include_once 'Functions.php';
+require_once "SecurityMode.php";
 include("./common/header.php");
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -31,10 +32,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validar cambio de contraseña solo si se ingresó algo
     if (!empty($currentPassword) || !empty($newPassword) || !empty($confirmPassword)) {
+        global $SECURITY_MODE;
+
         if (empty($currentPassword)) {
             $errors['current_password'] = "Current password is required.";
-        } elseif (!password_verify($currentPassword, $user->getPassword())) {
-            $errors['current_password'] = "Current password is incorrect.";
+        } else {
+            // Verify current password based on security mode
+            $isCurrentPasswordValid = false;
+            if ($SECURITY_MODE === "vulnerable") {
+                // In vulnerable mode, passwords are stored as plain text
+                $isCurrentPasswordValid = ($currentPassword === $user->getPassword());
+            } else {
+                // In secure mode, passwords are hashed
+                $isCurrentPasswordValid = password_verify($currentPassword, $user->getPassword());
+            }
+
+            if (!$isCurrentPasswordValid) {
+                $errors['current_password'] = "Current password is incorrect.";
+            }
         }
 
         if (empty($newPassword)) {
@@ -64,7 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Actualizar contraseña si corresponde
             if (!empty($newPassword)) {
-                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                global $SECURITY_MODE;
+                if ($SECURITY_MODE === "vulnerable") {
+                    // In vulnerable mode, store password as plain text
+                    $hashedPassword = $newPassword;
+                } else {
+                    // In secure mode, hash the password
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                }
                 $stmt = $pdo->prepare("UPDATE User SET Password = :password WHERE UserId = :userId");
                 $stmt->execute(['password' => $hashedPassword, 'userId' => $user->getUserId()]);
                 $user->setPassword($hashedPassword);
@@ -87,13 +109,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger text-center">
-                <?php foreach ($errors as $error) echo htmlspecialchars($error) . "<br>"; ?>
+                <?php foreach ($errors as $error)
+                    echo htmlspecialchars($error) . "<br>"; ?>
             </div>
         <?php endif; ?>
         <form method="post">
             <div class="mb-3">
                 <label for="name" class="form-label lead">Name:</label>
-                <input type="text" name="name" id="name" class="form-control" value="<?= htmlspecialchars($user->getName()) ?>">
+                <input type="text" name="name" id="name" class="form-control"
+                    value="<?= htmlspecialchars($user->getName()) ?>">
             </div>
             <hr>
             <h5>Change Password</h5>
