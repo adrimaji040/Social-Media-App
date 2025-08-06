@@ -7,9 +7,6 @@ include("./common/header.php");
 include_once 'Functions.php';
 include_once 'EntityClassLib.php';
 
-
-// testDBConnection();
-
 extract($_POST);
 $loginErrorMsg = '';
 
@@ -33,14 +30,15 @@ if (isset($btnLogin)) {
             $loginErrorMsg = 'Incorrect User ID and Password Combination!';
         }
     } catch (Exception $e) {
-         die("Error: " . $e->getMessage());
+        die("Error: " . $e->getMessage());
     }
 }
 ?>
 <section class="container text-start mb-5 mt-3">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
-            <form action='Login.php' method='post' class="p-4 border bg bg-light rounded shadow" style="max-width: 600px;">
+            <form action='Login.php' method='post' class="p-4 border bg bg-light rounded shadow"
+                style="max-width: 600px;">
                 <h1 class="text-center display-6 animated-border">Login</h1>
                 <p class="lead text-center">You need to <a href='NewUser.php'>sign up</a> if you are a new user.</p>
 
@@ -53,7 +51,8 @@ if (isset($btnLogin)) {
                 <div class="row mb-3">
                     <label for="studentId" class="col-sm-4 col-form-label text-end">User ID:</label>
                     <div class="col-sm-6">
-                        <input type='text' class="form-control" id="studentId" name='txtId' value="<?php echo isset($txtId) ? $txtId : ''; ?>">
+                        <input type='text' class="form-control" id="studentId" name='txtId'
+                            value="<?php echo isset($txtId) ? $txtId : ''; ?>">
                     </div>
                 </div>
 

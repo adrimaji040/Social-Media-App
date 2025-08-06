@@ -20,7 +20,8 @@ function getUserByIdAndPassword($userId, $password)
     global $SECURITY_MODE;
 
     if ($SECURITY_MODE === "vulnerable") {
-        // Vulnerable to SQL Injection and plain-text comparison
+        // Vulnerable to SQL Injection and plain-text password comparison
+        // Assumes passwords are stored as plain text in database
         $sql = "SELECT UserId, Name, Phone, Password FROM User WHERE UserId = '$userId' AND Password = '$password'";
         $stmt = $pdo->query($sql);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,12 +29,14 @@ function getUserByIdAndPassword($userId, $password)
             return new User($row['UserId'], $row['Name'], $row['Phone'], $row['Password']);
         }
     } else {
-        // Secure with prepared statements and password_verify
+        // Secure with prepared statements and hashed password verification
+        // Assumes passwords are stored as hashed in database
         $sql = "SELECT UserId, Name, Phone, Password FROM User WHERE UserId = :userId";
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':userId', $userId);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($row && password_verify($password, $row['Password'])) {
             return new User($row['UserId'], $row['Name'], $row['Phone'], $row['Password']);
         }
@@ -41,9 +44,6 @@ function getUserByIdAndPassword($userId, $password)
 
     return null;
 }
-
-
-
 function addNewUser($userId, $name, $phone, $hashedPassword)
 {
     $pdo = getPDO();
@@ -109,16 +109,4 @@ function deleteAlbum($albumId)
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':album_id', $albumId);
     $stmt->execute();
-}
-
-function testDBConnection()
-{
-    try {
-        $pdo = getPDO();
-        echo "Database connection successful!";
-        $userInfo = $pdo->query("SELECT USER()")->fetchColumn();
-        echo "Connected to MySQL as: $userInfo";
-    } catch (Exception $e) {
-        echo "Database connection failed: " . $e->getMessage();
-    }
 }
