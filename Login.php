@@ -8,7 +8,7 @@ include_once 'Functions.php';
 include_once 'EntityClassLib.php';
 
 
-testDBConnection();
+// testDBConnection();
 
 extract($_POST);
 $loginErrorMsg = '';
