@@ -167,35 +167,14 @@ a.btn:hover {
     animation: borderAnimation 5s linear infinite alternate, fadeInOut 5s ease-in-out infinite;
 }
 
-/* Dark theme animated border - use solid colors with very subtle glow effect */
+/* Dark theme animated border - use darker gradient colors */
 [data-bs-theme="dark"] .animated-border {
-    background: none;
-    background-clip: unset;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: unset;
-    color: #fff;
-    text-shadow: 
-        0 0 2px #ff9ff3,
-        0 0 4px #54a0ff;
-    animation: glowAnimation 5s ease-in-out infinite alternate;
-}
-
-@keyframes glowAnimation {
-    0% {
-        text-shadow: 
-            0 0 2px #ff9ff3,
-            0 0 4px #54a0ff;
-    }
-    50% {
-        text-shadow: 
-            0 0 3px #54a0ff,
-            0 0 5px #5f27cd;
-    }
-    100% {
-        text-shadow: 
-            0 0 2px #00d2d3,
-            0 0 4px #ff9ff3;
-    }
+    background: linear-gradient(90deg, #bb86fc, #03dac6, #82b1ff, #ffab40, #bb86fc);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: borderAnimation 5s linear infinite alternate, fadeInOut 5s ease-in-out infinite;
 }
 
 /* Feature icons styling */
