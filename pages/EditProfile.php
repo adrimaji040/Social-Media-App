@@ -1,9 +1,9 @@
 <?php
 
-include_once 'EntityClassLib.php';
-include_once 'Functions.php';
-require_once "SecurityMode.php";
-include("./common/header.php");
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+include_once(__DIR__ . "/../src/Functions.php");
+require_once(__DIR__ . "/../src/SecurityMode.php");
+include(__DIR__ . "/../Common/Header.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -135,10 +135,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary me-2">Save Changes</button>
-                <a href="index.php" class="btn btn-outline-secondary">Cancel</a>
+                <a href="../Index.php" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

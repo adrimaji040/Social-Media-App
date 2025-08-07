@@ -5,7 +5,7 @@ require_once 'SecurityMode.php';
 // Get PDO connection using Lab5.ini configuration
 function getPDO()
 {
-    $dbConnection = parse_ini_file("cst8257project.ini");
+    $dbConnection = parse_ini_file(__DIR__ . "/../cst8257project.ini");
     extract($dbConnection);
 
     $pdo = new PDO($dsn, $scriptUser, $scriptPassword);

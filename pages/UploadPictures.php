@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btnUpload'])) {
 }
 $albums = $user->fetchAllAlbums();
 
-include("./common/header.php");
+include(__DIR__ . "/../Common/Header.php");
 ?>
 <div class="container mb-5 mt-3">
     <div class="shadow py-2 px-3 mb-5 bg-body-tertiary rounded" style="max-width: 60vw; min-height:380px; margin: auto;">
@@ -130,4 +130,4 @@ include("./common/header.php");
     </div>
 </div>
 
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

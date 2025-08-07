@@ -3,9 +3,9 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include("./common/header.php");
-include_once 'Functions.php';
-include_once 'EntityClassLib.php';
+include(__DIR__ . "/../Common/Header.php");
+include_once(__DIR__ . "/../src/Functions.php");
+include_once(__DIR__ . "/../src/EntityClassLib.php");
 
 extract($_POST);
 $loginErrorMsg = '';
@@ -74,4 +74,4 @@ if (isset($btnLogin)) {
     </div>
 </section>
 
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

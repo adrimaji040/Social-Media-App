@@ -1,7 +1,7 @@
 <?php
 
-include_once 'EntityClassLib.php';
-include_once 'Functions.php';
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+include_once(__DIR__ . "/../src/Functions.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

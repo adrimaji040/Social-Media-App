@@ -1,7 +1,7 @@
 <?php
 
-include_once 'EntityClassLib.php';
-include_once 'Functions.php';
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+include_once(__DIR__ . "/../src/Functions.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -95,7 +95,7 @@ try {
     $errors[] = 'An error occurred: ' . htmlspecialchars($e->getMessage());
 }
 
-include("./common/header.php");
+include(__DIR__ . "/../Common/Header.php");
 ?>
 
 <div class="container mb-5 mt-3">
@@ -139,4 +139,4 @@ include("./common/header.php");
     </div>
 </div>
 
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

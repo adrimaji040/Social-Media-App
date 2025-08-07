@@ -1,5 +1,7 @@
 <?php
-require_once "SecurityMode.php";
+$isInPages = strpos($_SERVER['PHP_SELF'], '/pages/') !== false;
+$securityModePath = $isInPages ? __DIR__ . "/../src/SecurityMode.php" : __DIR__ . "/../src/SecurityMode.php";
+require_once $securityModePath;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -28,30 +30,35 @@ if (session_status() == PHP_SESSION_NONE) {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <?php 
+                $isInPages = strpos($_SERVER['PHP_SELF'], '/pages/') !== false;
+                $basePath = $isInPages ? '../' : 'pages/';
+                $homeBasePath = $isInPages ? '../' : '';
+                ?>
                 <ul class="navbar-nav w-100 justify-content-around">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="Index.php">Home</a>
+                        <a class="nav-link active" aria-current="page" href="<?= $homeBasePath ?>Index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="MyFriends.php">My Friends</a>
+                        <a class="nav-link" href="<?= $basePath ?>MyFriends.php">My Friends</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="MyAlbums.php">My Albums</a>
+                        <a class="nav-link" href="<?= $basePath ?>MyAlbums.php">My Albums</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="MyPictures.php">My Pictures</a>
+                        <a class="nav-link" href="<?= $basePath ?>MyPictures.php">My Pictures</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="UploadPictures.php">Upload Pictures</a>
+                        <a class="nav-link" href="<?= $basePath ?>UploadPictures.php">Upload Pictures</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="EditProfile.php">Edit Profile</a>
+                        <a class="nav-link" href="<?= $basePath ?>EditProfile.php">Edit Profile</a>
                     </li>
                     <li class="nav-item ms-auto me-2">
                         <?php if (isset($_SESSION['user'])): ?>
-                            <a class="nav-link" href="Logout.php">Log Out</a>
+                            <a class="nav-link" href="<?= $basePath ?>Logout.php">Log Out</a>
                         <?php else: ?>
-                            <a class="nav-link" href="Login.php">Log In</a>
+                            <a class="nav-link" href="<?= $basePath ?>Login.php">Log In</a>
                         <?php endif; ?>
                     </li>
                 </ul>

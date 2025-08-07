@@ -1,5 +1,5 @@
 <?php
-include_once 'Functions.php';
+include_once 'src/Functions.php';
 include("./common/header.php");
 
 $user = $_SESSION['user'] ?? null;
@@ -18,8 +18,8 @@ $user = $_SESSION['user'] ?? null;
             </h1>
             <?php if (!isset($user)) { ?>
                 <p class="lead">
-                    If this is your first time on our website, please <a href="./NewUser.php">sign up</a>.<br><br>
-                    Already have an account? You can <a href="./Login.php">log in</a> now.<br>
+                    If this is your first time on our website, please <a href="./pages/NewUser.php">sign up</a>.<br><br>
+                    Already have an account? You can <a href="./pages/Login.php">log in</a> now.<br>
                 </p>
             <?php } ?>
         </div>

@@ -1,7 +1,7 @@
 <?php
-include_once 'EntityClassLib.php';
-include_once 'Functions.php';
-include("./common/header.php");
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+include_once(__DIR__ . "/../src/Functions.php");
+include(__DIR__ . "/../Common/Header.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -231,4 +231,4 @@ $friendRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return confirm("Are you sure you want to decline the selected friend requests?");
     }
 </script>
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

@@ -3,10 +3,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include_once "./common/header.php";
-include_once "Functions.php";
-include_once "EntityClassLib.php";
-require_once "SecurityMode.php";
+include_once(__DIR__ . "/../Common/Header.php");
+include_once(__DIR__ . "/../src/Functions.php");
+include_once(__DIR__ . "/../src/EntityClassLib.php");
+require_once(__DIR__ . "/../src/SecurityMode.php");
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start(); // Start session only if not already started
@@ -70,7 +70,7 @@ if (isset($regSubmit)) {
 
             addNewUser($txtId, $txtName, $txtPhoneNumber, $hashedPassword);
             $_SESSION['user'] = getUserByIdAndPassword($txtId, $txtPassword);
-            header("Location: index.php");
+            header("Location: ../Index.php");
             exit();
         } catch (Exception $e) {
             die("The system is currently not available, try again later.");
@@ -148,4 +148,4 @@ if (isset($regSubmit)) {
 </section>
 
 
-<?php include('./common/footer.php'); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>
