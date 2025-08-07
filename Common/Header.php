@@ -1,6 +1,7 @@
 <?php
 $isInPages = strpos($_SERVER['PHP_SELF'], '/pages/') !== false;
 require_once __DIR__ . "/../src/SecurityMode.php";
+global $SECURITY_MODE;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -67,7 +68,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="position-fixed end-0 mt-5 me-3 px-3 py-2 rounded shadow 
     <?= $SECURITY_MODE === 'secure' ? 'bg-success' : 'bg-danger' ?> text-white fw-bold z-3"
         style="border-bottom-left-radius: .5rem; top: 60px;">
-        Mode: <?= strtoupper($SECURITY_MODE) ?>
+        Mode: <?= strtoupper($SECURITY_MODE ?? 'UNKNOWN') ?>
     </div>
 
     <div class="content px-4 flex-grow-1">
