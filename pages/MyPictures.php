@@ -2,7 +2,8 @@
 
 include_once(__DIR__ . "/../src/EntityClassLib.php");
 include_once(__DIR__ . "/../src/Functions.php");
-require_once 'SecurityMode.php';
+require_once(__DIR__ . "/../src/SecurityMode.php");
+global $SECURITY_MODE;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
