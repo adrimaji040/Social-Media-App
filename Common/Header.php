@@ -10,7 +10,9 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
+
+<!-- 1  Use 'dark' as default theme -->
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <title>Algonquin Social Media</title>
@@ -19,13 +21,16 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="<?= $isInPages ? '../' : '' ?>Common/css/styles.css?v=<?= time() ?>">
+
+    <!-- 2 Theme management - Load saved theme before page renders -->
     <script>
-        // Theme management - Load saved theme before page renders
         (function () {
-            const savedTheme = localStorage.getItem('bs-theme') || 'light';
+            const savedTheme = localStorage.getItem('bs-theme') || 'dark';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
         })();
     </script>
+
+
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -83,11 +88,14 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $pagesUrl ?>EditProfile.php">Edit Profile</a>
                     </li>
+
+                    <!-- 3 Theme toggle button -->
                     <li class="nav-item me-2">
                         <button class="btn btn-outline-light btn-sm" id="theme-toggle" title="Toggle Dark/Light Theme">
                             <i class="fas fa-moon" id="theme-icon"></i>
                         </button>
                     </li>
+
                     <li class="nav-item me-2">
                         <?php if (isset($_SESSION['user'])): ?>
                             <a class="nav-link" href="<?= $pagesUrl ?>Logout.php">Log Out</a>

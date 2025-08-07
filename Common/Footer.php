@@ -45,7 +45,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     hideMessage();
 
-    // Theme toggle functionality
+    // 4. JavaScript Theme Management
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
