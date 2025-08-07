@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
     }
 }
 
-require_once("./common/header.php");
+include(__DIR__ . "/../Common/Header.php");
 ?>
 <style>
     body {
@@ -183,4 +183,4 @@ require_once("./common/header.php");
         </div>
     <?php endif; ?>
 </div>
-<?php require_once("./common/footer.php"); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

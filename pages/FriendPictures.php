@@ -36,8 +36,8 @@ if (!$friendData) {
 $friend = new User(
     $friendData['UserId'],
     $friendData['Name'],
-    $friendData['Phone'] ?? null, 
-    $friendData['Password'] ?? null 
+    $friendData['Phone'] ?? null,
+    $friendData['Password'] ?? null
 );
 
 
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
     }
 }
 
-require_once("./common/header.php");
+require_once(__DIR__ . "/../Common/Header.php");
 ?>
 <h1 class="card-title text-center text-dark my-3 display-6 animated-border">
     Your friend <?= htmlspecialchars($friend->getName()) ?>'s Shared Pictures
@@ -144,16 +144,21 @@ require_once("./common/header.php");
                         </div>
                         <div class="thumbnail-bar d-flex overflow-auto mb-3">
                             <?php foreach ($pictures as $picture): ?>
-                                <a href="FriendPictures.php?friendId=<?= $friendId; ?>&album_id=<?= $selectedAlbumId; ?>&picture_id=<?= $picture->getPictureId(); ?>" class="me-1">
-                                    <img src="<?= htmlspecialchars($picture->getThumbnailPath()); ?>" alt="Thumbnail" class="thumbnail-img img-fluid <?= ($picture->getPictureId() == $selectedPictureId) ? 'selected-thumbnail' : ''; ?>">
+                                <a href="FriendPictures.php?friendId=<?= $friendId; ?>&album_id=<?= $selectedAlbumId; ?>&picture_id=<?= $picture->getPictureId(); ?>"
+                                    class="me-1">
+                                    <img src="<?= htmlspecialchars($picture->getThumbnailPath()); ?>" alt="Thumbnail"
+                                        class="thumbnail-img img-fluid <?= ($picture->getPictureId() == $selectedPictureId) ? 'selected-thumbnail' : ''; ?>">
                                 </a>
                             <?php endforeach; ?>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
                         <div class="text-section">
-                            <h5 class="mt-0 display-6" style="color:#007BFF;"><?= htmlspecialchars($selectedPicture->getTitle()); ?></h5>
-                            <p><strong>Description: </strong><?= !empty(htmlspecialchars($selectedPicture->getDescription())) ? htmlspecialchars($selectedPicture->getDescription()) : "No description found."; ?></p>
+                            <h5 class="mt-0 display-6" style="color:#007BFF;"><?= htmlspecialchars($selectedPicture->getTitle()); ?>
+                            </h5>
+                            <p><strong>Description:
+                                </strong><?= !empty(htmlspecialchars($selectedPicture->getDescription())) ? htmlspecialchars($selectedPicture->getDescription()) : "No description found."; ?>
+                            </p>
                             <?php
                             $comments = $selectedPicture->fetchComments();
                             if (!empty($comments)): ?>
@@ -169,10 +174,12 @@ require_once("./common/header.php");
                             <?php else: ?>
                                 <p>No comments yet.</p>
                             <?php endif; ?>
-                            <form method="POST" action="FriendPictures.php?friendId=<?= $friendId; ?>&album_id=<?= $selectedAlbumId; ?>&picture_id=<?= $selectedPictureId; ?>">
+                            <form method="POST"
+                                action="FriendPictures.php?friendId=<?= $friendId; ?>&album_id=<?= $selectedAlbumId; ?>&picture_id=<?= $selectedPictureId; ?>">
                                 <input type="hidden" name="picture_id" value="<?= $selectedPictureId; ?>">
                                 <div class="mb-3">
-                                    <textarea class="form-control" id="comment_text" name="comment_text" rows="3" placeholder="Leave a comment ..."></textarea>
+                                    <textarea class="form-control" id="comment_text" name="comment_text" rows="3"
+                                        placeholder="Leave a comment ..."></textarea>
                                 </div>
                                 <button type="submit" name="add_comment" class="btn btn-primary btn-sm">Add Comment</button>
                             </form>
@@ -184,13 +191,15 @@ require_once("./common/header.php");
             <?php endif; ?>
         <?php else: ?>
             <div class="row mx-3">
-            <div class="lead col-8 mt-4">No pictures in this album.</div>
+                <div class="lead col-8 mt-4">No pictures in this album.</div>
             </div>
         <?php endif; ?>
     <?php else: ?>
         <div class="row mx-3">
-            <p class="lead fs-5 text-start mt-4"><?= count($friendAlbums) < 1 ? '<div class="text-center lead">This friend has no shared albums.' : "Please select an album to view pictures." ?></p>
+            <p class="lead fs-5 text-start mt-4">
+                <?= count($friendAlbums) < 1 ? '<div class="text-center lead">This friend has no shared albums.' : "Please select an album to view pictures." ?>
+            </p>
         </div>
     <?php endif; ?>
 </div>
-<?php require_once("./common/footer.php"); ?>
+<?php include(__DIR__ . '/../Common/Footer.php'); ?>

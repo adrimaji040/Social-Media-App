@@ -20,7 +20,18 @@ if (isset($btnLogin)) {
             $_SESSION['user'] = $user;
 
             // Check if there's a redirect URL stored in session
-            $redirectUrl = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : 'index.php';
+            if (isset($_SESSION['redirect_url'])) {
+                $redirectUrl = $_SESSION['redirect_url'];
+                // If it's just a filename (basename), assume it's in the pages directory
+                if (strpos($redirectUrl, '/') === false && strpos($redirectUrl, '\\') === false) {
+                    $redirectUrl = './' . $redirectUrl;
+                }
+                // Clear the redirect URL from session
+                unset($_SESSION['redirect_url']);
+            } else {
+                // Default to home page
+                $redirectUrl = '../Index.php';
+            }
 
             // Redirect to the stored page
             header("Location: $redirectUrl");

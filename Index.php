@@ -1,6 +1,6 @@
 <?php
 include_once 'src/Functions.php';
-include("./common/header.php");
+include("./Common/Header.php");
 
 $user = $_SESSION['user'] ?? null;
 
@@ -45,4 +45,4 @@ $user = $_SESSION['user'] ?? null;
     </div>
 </div>
 
-<?php include('./common/footer.php'); ?>
+<?php include('./Common/Footer.php'); ?>

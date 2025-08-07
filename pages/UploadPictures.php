@@ -1,6 +1,6 @@
 <?php
-require_once 'EntityClassLib.php';
-require_once 'Functions.php';
+require_once(__DIR__ . "/../src/EntityClassLib.php");
+require_once(__DIR__ . "/../src/Functions.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -20,7 +20,7 @@ $album = $albumId ? Album::read($albumId) : null;
 $txtTitle = $_POST['txtTitle'] ?? '';
 $txtDescription = $_POST['txtDescription'] ?? '';
 
-$successMessage = $_SESSION['successMessage']?? '';
+$successMessage = $_SESSION['successMessage'] ?? '';
 unset($_SESSION['successMessage']);
 $errorMessage = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btnUpload'])) {
@@ -72,7 +72,8 @@ $albums = $user->fetchAllAlbums();
 include(__DIR__ . "/../Common/Header.php");
 ?>
 <div class="container mb-5 mt-3">
-    <div class="shadow py-2 px-3 mb-5 bg-body-tertiary rounded" style="max-width: 60vw; min-height:380px; margin: auto;">
+    <div class="shadow py-2 px-3 mb-5 bg-body-tertiary rounded"
+        style="max-width: 60vw; min-height:380px; margin: auto;">
         <div class="card-body">
             <h1 class="card-title text-center text-dark mb-3 display-6 animated-border">Upload Pictures</h1>
             <div class="container">
@@ -81,12 +82,14 @@ include(__DIR__ . "/../Common/Header.php");
                         <small>
                             <ul>
                                 <li>Accepted image types: JPG, JPEG, GIF and PNG. </li>
-                                <li>You can upload multiple pictures at a time by holding the shift key while selecting images.</li>
-                                <li>When uploading multiple pictures, the title and description will apply to all pictures.</li>
+                                <li>You can upload multiple pictures at a time by holding the shift key while selecting
+                                    images.</li>
+                                <li>When uploading multiple pictures, the title and description will apply to all pictures.
+                                </li>
                             </ul>
                         </small>
                     </div>
-                    
+
                     <?php if (!empty($successMessage)): ?>
                         <div class="alert alert-success text-center mt-2 disappearing-message" role="alert">
                             <?php echo $successMessage; ?>
@@ -107,13 +110,16 @@ include(__DIR__ . "/../Common/Header.php");
                         </div>
                         <div class="form-group mb-3 ps-1">
                             <label for="txtUpload">Image(s) to Upload:</label>
-                            <input type="file" class="form-control-file" name="txtUpload[]" id="txtUpload" multiple accept=".jpg,.jpeg,.gif,.png" />
+                            <input type="file" class="form-control-file" name="txtUpload[]" id="txtUpload" multiple
+                                accept=".jpg,.jpeg,.gif,.png" />
                         </div>
                         <div class="form-group mb-3">
-                            <input type="text" class="form-control" name="txtTitle" id="txtTitle" placeholder="Add a Title ..." />
+                            <input type="text" class="form-control" name="txtTitle" id="txtTitle"
+                                placeholder="Add a Title ..." />
                         </div>
                         <div class="form-group mb-3">
-                            <textarea class="form-control" name="txtDescription" id="txtDescription" placeholder="Add a Description ..." rows="4"></textarea>
+                            <textarea class="form-control" name="txtDescription" id="txtDescription"
+                                placeholder="Add a Description ..." rows="4"></textarea>
                         </div>
                         <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary" name="btnUpload">Submit</button>
