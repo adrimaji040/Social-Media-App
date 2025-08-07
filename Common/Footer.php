@@ -44,6 +44,61 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     hideMessage();
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    // Update theme icon based on current theme
+    function updateThemeIcon() {
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+      if (currentTheme === 'dark') {
+        themeIcon.className = 'fas fa-sun';
+        themeToggle.title = 'Switch to Light Mode';
+      } else {
+        themeIcon.className = 'fas fa-moon';
+        themeToggle.title = 'Switch to Dark Mode';
+      }
+    }
+
+    // Initialize icon
+    updateThemeIcon();
+
+    // Theme toggle click handler
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        // Update theme
+        document.documentElement.setAttribute('data-bs-theme', newTheme);
+        localStorage.setItem('bs-theme', newTheme);
+
+        // Update navbar classes
+        updateNavbarTheme(newTheme);
+
+        // Update icon
+        updateThemeIcon();
+      });
+    }
+
+    // Function to update navbar theme
+    function updateNavbarTheme(theme) {
+      const navbar = document.getElementById('main-navbar');
+      if (navbar) {
+        if (theme === 'dark') {
+          navbar.classList.add('navbar-dark');
+          navbar.classList.remove('navbar-light');
+        } else {
+          navbar.classList.add('navbar-light');
+          navbar.classList.remove('navbar-dark');
+        }
+      }
+    }
+
+    // Initialize navbar theme
+    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+    updateNavbarTheme(currentTheme);
   });
 </script>
 </body>

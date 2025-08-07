@@ -48,8 +48,7 @@ if (isset($btnLogin)) {
 <section class="container text-start mb-5 mt-3">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
-            <form action='Login.php' method='post' class="p-4 border bg bg-light rounded shadow"
-                style="max-width: 600px;">
+            <form action='Login.php' method='post' class="p-4 border bg-body rounded shadow" style="max-width: 600px;">
                 <h1 class="text-center display-6 animated-border">Login</h1>
                 <p class="lead text-center">You need to <a href='NewUser.php'>sign up</a> if you are a new user.</p>
 

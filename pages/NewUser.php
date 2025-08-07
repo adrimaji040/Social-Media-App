@@ -82,7 +82,7 @@ if (isset($regSubmit)) {
 <section class="container text-start mb-5 mt-3">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-7">
-            <form action="NewUser.php" method="post" class="p-4 border bg bg-light rounded shadow">
+            <form action="NewUser.php" method="post" class="p-4 border bg-body rounded shadow">
                 <div class="text-center">
                     <h1 class="display-4 animated-border">Sign up</h1>
                     <p class="lead">All fields are required</p>
